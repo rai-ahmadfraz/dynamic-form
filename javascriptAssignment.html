@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignment</title>
+    <style>
+        button{
+            padding: 10px;
+        }
+        #btns{
+            margin:10px;
+        }
+        #btns button{
+            margin: 10px;
+        }
+        .main{
+            margin: 40px;
+        }
+        input{
+            padding: 10px;
+            margin: 10px;
+        }
+    </style>
+    <script>
+        function addProduct(){
+
+            var btns = document.getElementById("btns");
+
+            if(btns.innerHTML ==""){
+                var removePro = document.createElement("BUTTON");
+                removePro.innerHTML = "Clear Products";
+                removePro.setAttribute("onclick","removeProducts()");
+                btns.append(removePro);
+
+                var calbill = document.createElement("BUTTON");
+                calbill.innerHTML = "Calculate Bill";
+                calbill.setAttribute("onclick","calculateBill()");
+                btns.append(calbill);
+            }
+
+            var divElement = document.getElementById("products");
+            var breakLine = document.createElement("br");
+            var breakLine1 = document.createElement("br");
+            
+            var prductName = document.createElement("input");
+            prductName.setAttribute('type','text');
+            prductName.setAttribute('placeholder','ProductName');
+            prductName.setAttribute('required','true');
+
+            var prductPrice = document.createElement("input");
+            prductPrice.setAttribute('type','number');
+            prductPrice.setAttribute('placeholder','prductPrice');
+            prductPrice.setAttribute('required','true');
+
+            var prductQuantity = document.createElement("input");
+            prductQuantity.setAttribute('type','number');
+            prductQuantity.setAttribute('placeholder','prductQuantity');;
+            prductQuantity.setAttribute('required','true');
+
+            divElement.appendChild(prductName);
+            divElement.appendChild(prductPrice);
+            divElement.appendChild(prductQuantity);
+            divElement.appendChild(breakLine);
+            divElement.appendChild(breakLine1);
+
+        }
+
+        function calculateBill(){
+            var inputs = document.getElementsByTagName('input');
+
+            var len = inputs.length;
+            var isValid = true;
+            if(len>0){
+                for(var x =0; x<len; x++)
+                {
+                    if(!inputs[x].checkValidity()){
+                     
+                        alert("fill all fields");
+                        isValid = false;
+                        break;
+                    }
+                }
+                if(isValid){
+                    var totalBill = 0;
+                    for(var i=0; i<len; i+=3){
+                        var productprice = inputs[i+1].value;
+                        var productquantity = inputs[i+2].value;
+                        totalBill += productprice * productquantity;
+                    }
+                    alert("total bill is: " + totalBill);
+                }
+                }
+                else{
+                    alert("add Products");
+                }
+        }
+
+        function removeProducts(){
+            document.getElementById("products").innerHTML = "";
+            document.getElementById("btns").innerHTML = "";
+        }
+    </script>
+</head>
+<body>
+    <div class="main">
+        <button onclick="addProduct()" id="addProducts">Add a new product</button>
+        <div id="btns"></div>
+        <br>
+        <div id="products"></div>
+    </div>
+</body>
+</html>
